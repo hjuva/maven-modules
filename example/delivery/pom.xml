@@ -1,0 +1,85 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.acme</groupId>
+	<artifactId>delivery</artifactId>
+	<packaging>pom</packaging>
+	<!-- This is the "global" version of our delivery -->
+	<version>1.0.1</version>
+	<name>delivery</name>
+	<!--
+		The dependency section gives us a clear insight of the current version
+		of each sub-project.
+	-->
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>parent</artifactId>
+			<version>1.0.0</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>service-api</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>service-impl</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>webapp</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.acme</groupId>
+				<artifactId>delivery-maven-plugin</artifactId>
+				<version>1.0-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<id>check-version-consistency</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>check-version-consistency</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>check-deploy-needed</id>
+						<phase>install</phase>
+						<goals><goal>check-deploy-needed</goal></goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.groovy</groupId>
+						<artifactId>groovy-all</artifactId>
+						<version>1.7.4</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+	<!--
+		Dummy distribution management to make altDeploymentRepository work for
+		my local tests
+		see http://jira.codehaus.org/browse/MDEPLOY-50
+	-->
+	<distributionManagement>
+		<repository>
+			<id>repo</id>
+			<name>Repository Name</name>
+			<url>scp://host/path/to/repo</url>
+		</repository>
+		<snapshotRepository>
+			<id>repo</id>
+			<name>Repository Name</name>
+			<url>scp://host/path/to/repo</url>
+		</snapshotRepository>
+	</distributionManagement>
+</project>
