@@ -6,3 +6,6 @@ build.
 
 Change the versions in the POMs and run the global build again. Try the
 scenarios described in the blog posts.
+
+
+mvn versions:use-next-versions versions:commit -Dincludes=com.acme:service-api -DallowSnapshots=true
